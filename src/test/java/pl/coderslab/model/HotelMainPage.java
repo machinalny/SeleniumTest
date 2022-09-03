@@ -23,10 +23,14 @@ public class HotelMainPage {
         WebElement selectHotelDropdown = this.driver.findElement(By.xpath("/html//form[@id='search_hotel_block_form']//button[@type='button']"));
         selectHotelDropdown.click();
 
+//        WebElement hotel = this.driver.findElement(By.xpath("//form[@id='search_hotel_block_form']//ul[@class='dropdown-menu hotel_dropdown_ul']/li"));
+//        hotel.click();
+
         List<WebElement> hotels = this.driver.findElements(By.xpath("//form[@id='search_hotel_block_form']//ul[@class='dropdown-menu hotel_dropdown_ul']"));
         for(WebElement hotel: hotels){
             if (hotel.getText().equals(hotelName)){
                 hotel.click();
+                break;
             }
         }
 
@@ -36,8 +40,8 @@ public class HotelMainPage {
         checkInDateInput.sendKeys(fromDate);
         checkOutDateInput.clear();
         checkOutDateInput.sendKeys(toDate);
-        WebElement searchNowButton = this.driver.findElement(By.id("search_room_submit"));
 
+        WebElement searchNowButton = this.driver.findElement(By.id("search_room_submit"));
         searchNowButton.click();
     }
 }

@@ -8,8 +8,6 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import pl.coderslab.model.*;
 
 import java.time.Duration;
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.Random;
 
 import static org.junit.Assert.assertEquals;
@@ -18,7 +16,6 @@ import static org.junit.Assert.assertTrue;
 public class HotelTest {
 
     private WebDriver driver;
-
     private final static String PERMANENT_LOGIN = "mytest@cl-test.com";
     private final static String PERMANENT_PASSWORD = "mytestPassword";
 
@@ -65,7 +62,7 @@ public class HotelTest {
     }
 
     @Test
-    public void searchAnyHotel(){
+    public void testSearchAnyHotel(){
         HotelMainPage hotelMainPage = new HotelMainPage(this.driver);
         hotelMainPage.clickSignIn();
 
@@ -76,8 +73,10 @@ public class HotelTest {
         hotelMyAccountPage.goToHomePage();
 
         hotelMainPage.searchForHotelRoomsBetweenDates("The Hotel Prime", "22-09-2022", "29-09-2022");
-        HotelSearchRoomResultsPage searchRoomResultsPage = new HotelSearchRoomResultsPage(driver);
-        assertTrue(searchRoomResultsPage.getAvailableRoomSize() > 0);
+
+        HotelSearchRoomResultsPage searchRoomResultsPage = new HotelSearchRoomResultsPage(this.driver);
+        assertTrue(searchRoomResultsPage.isAnyRoomOnTheListPresent());
+        assertTrue(searchRoomResultsPage.getAvailableRoomNumber() > 0);
 
     }
 
