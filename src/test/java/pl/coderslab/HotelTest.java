@@ -75,7 +75,6 @@ public class HotelTest {
         hotelMainPage.searchForHotelRoomsBetweenDates("The Hotel Prime", "22-09-2022", "29-09-2022");
 
         HotelSearchRoomResultsPage searchRoomResultsPage = new HotelSearchRoomResultsPage(this.driver);
-        assertTrue(searchRoomResultsPage.isAnyRoomOnTheListPresent());
         assertTrue(searchRoomResultsPage.getAvailableRoomNumber() > 0);
 
     }

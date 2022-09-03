@@ -1,28 +1,34 @@
 package pl.coderslab.model;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 public class HotelMyAccountPage {
 
     private WebDriver driver;
 
-    public HotelMyAccountPage(WebDriver driver){
+    @FindBy(className = "alert-success")
+    private WebElement successAlertField;
+
+    @FindBy(css = ".footer_links span")
+    private WebElement homeButton;
+
+    public HotelMyAccountPage(WebDriver driver) {
+        PageFactory.initElements(driver, this);
         this.driver = driver;
     }
 
-    public String getAlertText(){
-        WebElement successAlertField = this.driver.findElement(By.className("alert-success"));
+    public String getAlertText() {
         return successAlertField.getText();
     }
 
-    public String getPageTitle(){
+    public String getPageTitle() {
         return this.driver.getTitle();
     }
 
     public void goToHomePage() {
-        WebElement homeButton = this.driver.findElement(By.cssSelector(".footer_links span"));
         homeButton.click();
     }
 }

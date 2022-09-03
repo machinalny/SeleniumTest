@@ -1,27 +1,31 @@
 package pl.coderslab.model;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 public class HotelCreateAnAccountPage {
 
     private WebDriver driver;
+    @FindBy(id = "customer_firstname")
+    private WebElement customerFirstNameInput;
 
-    private By customerNameSelector = By.id("customer_firstname");
-    private By customerLastNameSelector = By.id("customer_lastname");
-    private By customerPasswordSelector = By.id("passwd");
-    private By submitAccountButtonSelector = By.id("submitAccount");
+    @FindBy(id = "customer_lastname")
+    private WebElement customerLastNameInput;
+
+    @FindBy(id = "passwd")
+    private WebElement customerPassword;
+
+    @FindBy(id = "submitAccount")
+    private WebElement submitButton;
 
     public HotelCreateAnAccountPage(WebDriver driver) {
+        PageFactory.initElements(driver, this);
         this.driver = driver;
     }
 
     public void fillFormAndSubmit(String name, String lastName, String password) {
-        WebElement customerFirstNameInput = this.driver.findElement(customerNameSelector);
-        WebElement customerLastNameInput = this.driver.findElement(customerLastNameSelector);
-        WebElement customerPassword = this.driver.findElement(customerPasswordSelector);
-
         customerFirstNameInput.clear();
         customerFirstNameInput.sendKeys(name);
         customerLastNameInput.clear();
@@ -30,7 +34,6 @@ public class HotelCreateAnAccountPage {
         customerPassword.clear();
         customerPassword.sendKeys(password);
 
-        WebElement submitButton = this.driver.findElement(submitAccountButtonSelector);
         submitButton.click();
     }
 

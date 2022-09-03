@@ -1,27 +1,29 @@
 package pl.coderslab.model;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 public class HotelLoginPage {
 
     private WebDriver driver;
 
-    private By registerEmailInputSelector = By.id("email_create");
+    @FindBy(id = "email_create")
+    private WebElement registerEmailInput;
+    @FindBy(id = "email")
+    private WebElement signInEmailAddressInput;
+    @FindBy(id = "passwd")
+    private WebElement signInPasswordInput;
+    @FindBy(id = "SubmitLogin")
+    private WebElement signInButton;
 
-    private By signInEmailInputSelector = By.id("email");
-
-    private By signInPasswordInputSelector = By.id("passwd");
-
-    private By signInButtonSelector = By.id("SubmitLogin");
-
-    public HotelLoginPage(WebDriver driver){
+    public HotelLoginPage(WebDriver driver) {
+        PageFactory.initElements(driver, this);
         this.driver = driver;
     }
 
-    public void createAnAccountWithEmail(String email){
-        WebElement registerEmailInput = this.driver.findElement(registerEmailInputSelector);
+    public void createAnAccountWithEmail(String email) {
         registerEmailInput.clear();
         registerEmailInput.sendKeys(email);
         registerEmailInput.submit();
@@ -29,17 +31,13 @@ public class HotelLoginPage {
 
 
     public void signInWithCredentials(String email, String password) {
-        WebElement signInEmailAddressInput = this.driver.findElement(signInEmailInputSelector);
         signInEmailAddressInput.clear();
         signInEmailAddressInput.sendKeys(email);
 
-        WebElement signInPasswordInput = this.driver.findElement(signInPasswordInputSelector);
         signInPasswordInput.clear();
         signInPasswordInput.sendKeys(password);
 
-        WebElement signInButton = this.driver.findElement(signInButtonSelector);
         signInButton.click();
-
 
     }
 }
