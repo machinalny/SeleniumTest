@@ -10,6 +10,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import pl.coderslab.model.HotelCreateAnAccountPage;
 import pl.coderslab.model.HotelLoginPage;
 import pl.coderslab.model.HotelMainPage;
+import pl.coderslab.model.HotelMyAccountPage;
 
 import java.time.Duration;
 import java.util.Random;
@@ -54,19 +55,13 @@ public class AccountTest {
         HotelCreateAnAccountPage hotelCreateAnAccountPage = new HotelCreateAnAccountPage(this.driver);
         hotelCreateAnAccountPage.fillFormAndSubmit("Janusz", "Januszewski", "12345");
 
-
-        // Sprawdz czy konto poprawnie zalozone
-        WebElement successAlertField = this.driver.findElement(By.className("alert-success"));
-
-        // Pobierz informacje o poprawnym zalozeniu konta
-        String alertText = successAlertField.getText();
-
-        // Zweryfikuj komunikat.
+        HotelMyAccountPage hotelMyAccountPage = new HotelMyAccountPage(driver);
+        String alertText = hotelMyAccountPage.getAlertText();
         assertEquals(expectedAlertText, alertText);
 
-        String pageTitle = this.driver.getTitle();
-
+        String pageTitle = hotelMyAccountPage.getPageTitle();
         assertEquals("My account - MyBooking", pageTitle);
+
     }
 
 }
