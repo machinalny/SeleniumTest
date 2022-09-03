@@ -15,9 +15,9 @@ import static org.junit.Assert.assertTrue;
 
 public class HotelTest {
 
-    private WebDriver driver;
     private final static String PERMANENT_LOGIN = "mytest@cl-test.com";
     private final static String PERMANENT_PASSWORD = "mytestPassword";
+    private WebDriver driver;
 
     @Before
     public void setUp() {
@@ -34,7 +34,7 @@ public class HotelTest {
 
     @After
     public void tearDown() {
-        driver.quit();
+//        driver.quit();
     }
 
     @Test
@@ -62,7 +62,7 @@ public class HotelTest {
     }
 
     @Test
-    public void testSearchAnyHotel(){
+    public void testSearchAnyHotel() {
         HotelMainPage hotelMainPage = new HotelMainPage(this.driver);
         hotelMainPage.clickSignIn();
 
@@ -77,6 +77,16 @@ public class HotelTest {
         HotelSearchRoomResultsPage searchRoomResultsPage = new HotelSearchRoomResultsPage(this.driver);
         assertTrue(searchRoomResultsPage.getAvailableRoomNumber() > 0);
 
+    }
+
+    @Test
+    public void testBookRoomInHotel() {
+        HotelMainPage hotelMainPage = new HotelMainPage(driver);
+        hotelMainPage.searchForHotelRoomsBetweenDates("The Hotel Prime", "22-09-2022", "29-09-2022");
+        HotelSearchRoomResultsPage searchRoomResultsPage = new HotelSearchRoomResultsPage(this.driver);
+        searchRoomResultsPage.bookAnyRoom();
+        HotelQuickOrderPage quickOrderPage = new HotelQuickOrderPage(driver);
+        assertTrue(quickOrderPage.isThereRoomInBasket());
     }
 
 
