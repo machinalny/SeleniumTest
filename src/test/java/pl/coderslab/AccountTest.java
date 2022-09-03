@@ -7,6 +7,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import pl.coderslab.model.HotelCreateAnAccountPage;
 import pl.coderslab.model.HotelLoginPage;
 import pl.coderslab.model.HotelMainPage;
 
@@ -50,24 +51,9 @@ public class AccountTest {
         HotelLoginPage hotelLoginPage = new HotelLoginPage(this.driver);
         hotelLoginPage.createAnAccountWithEmail(email);
 
-        // Wyszukaj podstawowe elementy do zalozenia uzytkownika
-        WebElement customerFirstNameInput = this.driver.findElement(By.id("customer_firstname"));
-        WebElement customerLastNameInput = this.driver.findElement(By.id("customer_lastname"));
-//        WebElement customerEmail = driver.findElement(By.id("email"));
-        WebElement customerPassword = this.driver.findElement(By.id("passwd"));
+        HotelCreateAnAccountPage hotelCreateAnAccountPage = new HotelCreateAnAccountPage(this.driver);
+        hotelCreateAnAccountPage.fillFormAndSubmit("Janusz", "Januszewski", "12345");
 
-        // Wypelnij brakujace informacje o uzytkowniku
-        customerFirstNameInput.clear();
-        customerFirstNameInput.sendKeys("Janusz");
-        customerLastNameInput.clear();
-        customerLastNameInput.sendKeys("Januszewski");
-
-        customerPassword.clear();
-        customerPassword.sendKeys("12345");
-
-        // Zaloz konto
-        WebElement submitButton = this.driver.findElement(By.id("submitAccount"));
-        submitButton.click();
 
         // Sprawdz czy konto poprawnie zalozone
         WebElement successAlertField = this.driver.findElement(By.className("alert-success"));
