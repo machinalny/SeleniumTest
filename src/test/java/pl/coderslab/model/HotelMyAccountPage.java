@@ -20,4 +20,9 @@ public class HotelMyAccountPage {
     public String getPageTitle(){
         return this.driver.getTitle();
     }
+
+    public void goToHomePage() {
+        WebElement homeButton = this.driver.findElement(By.cssSelector(".footer_links span"));
+        homeButton.click();
+    }
 }

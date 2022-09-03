@@ -33,4 +33,5 @@ public class HotelCreateAnAccountPage {
         WebElement submitButton = this.driver.findElement(submitAccountButtonSelector);
         submitButton.click();
     }
+
 }
