@@ -65,7 +65,7 @@ public class HotelSteps {
 
     @Then("an account is created")
     public void accountIsCreated(){
-        String expectedAlertText = "Your account has been created.1";
+        String expectedAlertText = "Your account has been created.";
 
         // Sprawdz czy konto poprawnie zalozone
         WebElement successAlertField = this.driver.findElement(By.className("alert-success"));
