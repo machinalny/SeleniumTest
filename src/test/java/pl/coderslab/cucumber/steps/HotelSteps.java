@@ -8,6 +8,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import pl.coderslab.model.HotelCreateAnAccountPage;
+import pl.coderslab.model.HotelLoginPage;
+import pl.coderslab.model.HotelMainPage;
+import pl.coderslab.model.HotelMyAccountPage;
 
 import java.time.Duration;
 import java.util.Random;
@@ -34,33 +38,14 @@ public class HotelSteps {
     public void newUserRegister(){
         String email = new Random().nextInt(100000000) + "TEA26@test.com";
 
-        // Wyszukaj przycisk do logowania
-        WebElement signInButton = this.driver.findElement(By.className("user_login"));
-        signInButton.click(); // Kliknij na przycisk SignIn
+        HotelMainPage hotelMainPage = new HotelMainPage(this.driver);
+        hotelMainPage.clickSignIn();
 
-        WebElement registerEmailInput = this.driver.findElement(By.id("email_create"));
-        registerEmailInput.clear(); // Wyczysc pole tekstowe przed wpisaniem
-        registerEmailInput.sendKeys(email);
-        registerEmailInput.submit(); // Potwierdz email do rejestracji
+        HotelLoginPage hotelLoginPage = new HotelLoginPage(this.driver);
+        hotelLoginPage.createAnAccountWithEmail(email);
 
-        // Wyszukaj podstawowe elementy do zalozenia uzytkownika
-        WebElement customerFirstNameInput = this.driver.findElement(By.id("customer_firstname"));
-        WebElement customerLastNameInput = this.driver.findElement(By.id("customer_lastname"));
-//        WebElement customerEmail = driver.findElement(By.id("email"));
-        WebElement customerPassword = this.driver.findElement(By.id("passwd"));
-
-        // Wypelnij brakujace informacje o uzytkowniku
-        customerFirstNameInput.clear();
-        customerFirstNameInput.sendKeys("Janusz");
-        customerLastNameInput.clear();
-        customerLastNameInput.sendKeys("Januszewski");
-
-        customerPassword.clear();
-        customerPassword.sendKeys("12345");
-
-        // Zaloz konto
-        WebElement submitButton = this.driver.findElement(By.id("submitAccount"));
-        submitButton.click();
+        HotelCreateAnAccountPage hotelCreateAnAccountPage = new HotelCreateAnAccountPage(this.driver);
+        hotelCreateAnAccountPage.fillFormAndSubmit("Janusz", "Januszewski", "12345");
     }
 
 
@@ -68,45 +53,22 @@ public class HotelSteps {
     public void newUserRegister(String name, String lastName) {
         String email = new Random().nextInt(100000000) + "TEA26@test.com";
 
-        WebElement signInButton = this.driver.findElement(By.className("user_login"));
-        signInButton.click(); // Kliknij na przycisk SignIn
+        HotelMainPage hotelMainPage = new HotelMainPage(this.driver);
+        hotelMainPage.clickSignIn();
 
-        WebElement registerEmailInput = this.driver.findElement(By.id("email_create"));
-        registerEmailInput.clear(); // Wyczysc pole tekstowe przed wpisaniem
-        registerEmailInput.sendKeys(email);
-        registerEmailInput.submit(); // Potwierdz email do rejestracji
+        HotelLoginPage hotelLoginPage = new HotelLoginPage(this.driver);
+        hotelLoginPage.createAnAccountWithEmail(email);
 
-        // Wyszukaj podstawowe elementy do zalozenia uzytkownika
-        WebElement customerFirstNameInput = this.driver.findElement(By.id("customer_firstname"));
-        WebElement customerLastNameInput = this.driver.findElement(By.id("customer_lastname"));
-//        WebElement customerEmail = driver.findElement(By.id("email"));
-        WebElement customerPassword = this.driver.findElement(By.id("passwd"));
-
-        // Wypelnij brakujace informacje o uzytkowniku
-        customerFirstNameInput.clear();
-        customerFirstNameInput.sendKeys(name);
-        customerLastNameInput.clear();
-        customerLastNameInput.sendKeys(lastName);
-
-        customerPassword.clear();
-        customerPassword.sendKeys("12345");
-
-        // Zaloz konto
-        WebElement submitButton = this.driver.findElement(By.id("submitAccount"));
-        submitButton.click();
+        HotelCreateAnAccountPage hotelCreateAnAccountPage = new HotelCreateAnAccountPage(this.driver);
+        hotelCreateAnAccountPage.fillFormAndSubmit(name, lastName, "12345");
     }
 
     @Then("an account is created")
     public void accountIsCreated(){
         String expectedAlertText = "Your account has been created.";
 
-        // Sprawdz czy konto poprawnie zalozone
-        WebElement successAlertField = this.driver.findElement(By.className("alert-success"));
-
-        // Pobierz informacje o poprawnym zalozeniu konta
-        String alertText = successAlertField.getText();
-
-        // Zweryfikuj komunikat.
+        HotelMyAccountPage hotelMyAccountPage = new HotelMyAccountPage(driver);
+        String alertText = hotelMyAccountPage.getAlertText();
         assertEquals(expectedAlertText, alertText);
     }
 

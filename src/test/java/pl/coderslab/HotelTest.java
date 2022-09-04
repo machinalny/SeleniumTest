@@ -5,9 +5,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import pl.coderslab.dto.Gender;
 import pl.coderslab.model.*;
 
 import java.time.Duration;
+import java.time.LocalDate;
 import java.util.Random;
 
 import static org.junit.Assert.assertEquals;
@@ -81,12 +83,22 @@ public class HotelTest {
 
     @Test
     public void testBookRoomInHotel() {
+        String email = new Random().nextInt(100000000) + "TEA26@test.com";
+
         HotelMainPage hotelMainPage = new HotelMainPage(driver);
         hotelMainPage.searchForHotelRoomsBetweenDates("The Hotel Prime", "22-09-2022", "29-09-2022");
         HotelSearchRoomResultsPage searchRoomResultsPage = new HotelSearchRoomResultsPage(this.driver);
         searchRoomResultsPage.bookAnyRoom();
+
         HotelQuickOrderPage quickOrderPage = new HotelQuickOrderPage(driver);
         assertTrue(quickOrderPage.isThereRoomInBasket());
+        System.out.println(quickOrderPage.getRoomsInBasket());
+        quickOrderPage.orderRoomWithNewCustomer(email, "passwd", "Jan", "Kowalski", Gender.FEMALE, LocalDate.of(1992, 11, 7), "Ulica", "12345", "Januszowo", "12345667");
+
+        HotelOrderSummaryPage orderSummaryPage = new HotelOrderSummaryPage(driver);
+        orderSummaryPage.confirmOrder();
+        HotelOrderConfirmationPage orderConfirmationPage = new HotelOrderConfirmationPage(driver);
+        assertEquals("Your order on MyBooking is complete.", orderConfirmationPage.getAlertInformation().strip());
     }
 
 
