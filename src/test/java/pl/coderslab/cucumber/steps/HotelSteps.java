@@ -63,6 +63,39 @@ public class HotelSteps {
         submitButton.click();
     }
 
+
+    @When("a user with {} and {} is registered")
+    public void newUserRegister(String name, String lastName) {
+        String email = new Random().nextInt(100000000) + "TEA26@test.com";
+
+        WebElement signInButton = this.driver.findElement(By.className("user_login"));
+        signInButton.click(); // Kliknij na przycisk SignIn
+
+        WebElement registerEmailInput = this.driver.findElement(By.id("email_create"));
+        registerEmailInput.clear(); // Wyczysc pole tekstowe przed wpisaniem
+        registerEmailInput.sendKeys(email);
+        registerEmailInput.submit(); // Potwierdz email do rejestracji
+
+        // Wyszukaj podstawowe elementy do zalozenia uzytkownika
+        WebElement customerFirstNameInput = this.driver.findElement(By.id("customer_firstname"));
+        WebElement customerLastNameInput = this.driver.findElement(By.id("customer_lastname"));
+//        WebElement customerEmail = driver.findElement(By.id("email"));
+        WebElement customerPassword = this.driver.findElement(By.id("passwd"));
+
+        // Wypelnij brakujace informacje o uzytkowniku
+        customerFirstNameInput.clear();
+        customerFirstNameInput.sendKeys(name);
+        customerLastNameInput.clear();
+        customerLastNameInput.sendKeys(lastName);
+
+        customerPassword.clear();
+        customerPassword.sendKeys("12345");
+
+        // Zaloz konto
+        WebElement submitButton = this.driver.findElement(By.id("submitAccount"));
+        submitButton.click();
+    }
+
     @Then("an account is created")
     public void accountIsCreated(){
         String expectedAlertText = "Your account has been created.";
