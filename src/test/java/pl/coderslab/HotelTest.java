@@ -34,7 +34,7 @@ public class HotelTest {
 
     @After
     public void tearDown() {
-//        driver.quit();
+        driver.quit();
     }
 
     @Test
